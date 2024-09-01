@@ -13,7 +13,14 @@ const taskSchema = mongoose.Schema({
     },
     project: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Project'
+        ref: 'Project',
+        required: true
+    },
+    startDate: {
+        type: Date,
+    },
+    endDate: {
+        type: Date,
     }
 });
 

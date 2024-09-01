@@ -1,6 +1,7 @@
 const User = require('../Model/User');
 const bcrypt = require('bcryptjs');
 const {generateToken} = require("../jwtUtils");
+const Task = require('../Model/Task');
 
 const signup = async (req, res) => {
     try{
@@ -60,4 +61,21 @@ const login = async (req, res) => {
     }
 }
 
-module.exports = {signup, login};
+const getAllTasks = async(req, res) => {
+    const userId = req.body.id.user.id;
+    let user = await User.findById(userId);
+    console.log(user);
+    res.send(user.tasks);
+}
+
+const getAllProjects = async(req, res) => {
+    const userId = req.body.id.user.id;
+    let user = await User.findById(userId);
+    let userProjects = []
+    user.tasks.forEach(task => {
+        userProjects.push(task.project);
+    })
+    res.send(userProjects);
+}
+
+module.exports = {signup, login, getAllTasks, getAllProjects};
