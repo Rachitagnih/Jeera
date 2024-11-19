@@ -5,7 +5,7 @@ const isAuthenticated = (req, res, next) => {
     if(!check){
         return res.status(401).send({error:"Please login first"});
     }
-    req.body.id = check;
+    req.body.userId = check.userId;
     next();
 }
 
