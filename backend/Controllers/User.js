@@ -15,14 +15,10 @@ const signup = async (req, res) => {
             name : req.body.name,
             username : req.body.username,
             email : req.body.email,
-            password : secPass,
+            password : secPass
         });
-        const data = {
-            user : {
-                id : user.id
-            }
-        }
-        const token = generateToken(data);
+
+        const token = generateToken({userId: user.id, admin: req.body.admin});
         res.json({
             success: true,
             message: 'Authentication successful!',
@@ -44,12 +40,8 @@ const login = async (req, res) => {
         if(!checkPass){
             return res.status(404).send({success : false, message : "Wrong password entered"});
         }
-        const data = {
-            user : {
-                id : user.id
-            }
-        }
-        const token = generateToken(data);
+
+        const token = generateToken({userId: user.id});
         res.json({
             success: true,
             message: 'Authentication successful!',
@@ -62,14 +54,14 @@ const login = async (req, res) => {
 }
 
 const getAllTasks = async(req, res) => {
-    const userId = req.body.id.user.id;
+    const userId = req.body.userId;
     let user = await User.findById(userId);
-    console.log(user);
+    // console.log(user);
     res.send(user.tasks);
 }
 
 const getAllProjects = async(req, res) => {
-    const userId = req.body.id.user.id;
+    const userId = req.body.userId;
     let user = await User.findById(userId);
     let userProjects = []
     user.tasks.forEach(task => {

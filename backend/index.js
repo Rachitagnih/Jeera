@@ -14,6 +14,8 @@ app.use('/admin', require('./routes/Admin'));
 
 app.use('/user', require('./routes/User.js'));
 
+app.use('/task', require('./routes/Task.js'));
+
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
     console.log('listening on port : ' + process.env.PORT);
